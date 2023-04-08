@@ -54,7 +54,7 @@ tar -xvf dust.tar.gz
 chmod +x /tmp/dust-v0.8.4-x86_64-unknown-linux-gnu/dust
 mv /tmp/dust-v0.8.4-x86_64-unknown-linux-gnu/dust /usr/bin/dust
 
-dnf install https://github.com/dalance/procs/releases/download/v0.14.0/procs-0.14.0-1.x86_64.rpm
+dnf install https://github.com/dalance/procs/releases/download/v0.14.0/procs-0.14.0-1.x86_64.rpm -y
 
 cd /tmp && curl -L https://github.com/rs/curlie/releases/download/v1.6.9/curlie_1.6.9_linux_amd64.rpm -o curlie_1.6.9_linux_amd64.rpm
 dnf install /tmp/curlie_1.6.9_linux_amd64.rpm -y
