@@ -85,6 +85,8 @@ echo 'GSSAPIAuthentication no' | tee -a /etc/ssh/sshd_config
 echo 'configuring system limits...'
 echo '* soft nofile 65536' | tee -a /etc/security/limits.conf
 echo '* hard nofile 65536' | tee -a /etc/security/limits.conf
+echo '* soft nproc 65536' | tee -a /etc/security/limits.conf
+echo '* hard nproc 65536' | tee -a /etc/security/limits.conf
 
 echo 'configuring system paramaters...'
 echo 'net.ipv6.conf.all.disable_ipv6=1' | tee -a /etc/sysctl.conf
