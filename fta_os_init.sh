@@ -15,7 +15,7 @@ echo 'SELinux turned off!'
 echo 'configure DNF or YUM'
 
 echo 'installing epel-release...'
-dnf install epel-release
+dnf install epel-release -y
 
 echo 'installing softwares...'
 dnf install vim screen git wget curl net-tools gcc-c++ make python-devel -y
