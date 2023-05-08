@@ -122,3 +122,5 @@ echo 'clean up...'
 rm -rf /tmp/*
 
 echo '===== ALL DONE, SYSTEM INITIALIZED! ====='
+echo 'other: systemctl stop firewalld && systemctl disable firewalld'
+
