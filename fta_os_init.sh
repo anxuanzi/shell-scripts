@@ -19,9 +19,11 @@ dnf install epel-release -y
 
 echo 'installing softwares...'
 dnf install vim screen git wget curl net-tools gcc-c++ make python-devel -y
+dnf NetworkManager-tui -y
 
 echo 'installing extra softwares...'
-dnf install yum-utils device-mapper-persistent-data lvm2 tcping htop telnet -y
+dnf install yum-utils device-mapper-persistent-data lvm2 htop telnet -y
+#dnf install tcping -y
 
 echo 'installing nodejs related...'
 curl -fsSL https://rpm.nodesource.com/setup_18.x | bash -
