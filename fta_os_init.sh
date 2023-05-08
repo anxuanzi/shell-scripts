@@ -14,6 +14,9 @@ echo 'SELinux turned off!'
 
 echo 'configure DNF or YUM'
 
+echo 'installing epel-release...'
+dnf install epel-release -y
+
 echo 'installing softwares...'
 dnf install vim screen git wget curl net-tools gcc-c++ make python-devel -y
 
@@ -89,10 +92,25 @@ echo '* soft nproc 65536' | tee -a /etc/security/limits.conf
 echo '* hard nproc 65536' | tee -a /etc/security/limits.conf
 
 echo 'configuring system paramaters...'
+echo 'net.ipv4.ip_forward=1' | tee -a /etc/sysctl.conf
+echo 'net.core.netdev_max_backlog=41960' | tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_max_tw_buckets=300000' | tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_tw_reuse=1' | tee -a /etc/sysctl.conf
 echo 'net.ipv6.conf.all.disable_ipv6=1' | tee -a /etc/sysctl.conf
 echo 'net.ipv6.conf.default.disable_ipv6=1' | tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_fastopen=3' | tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_max_syn_backlog=16384' | tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_fin_timeout=30' | tee -a /etc/sysctl.conf
+echo 'net.core.somaxconn=10240' | tee -a /etc/sysctl.conf
 echo 'net.core.default_qdisc=fq' | tee -a /etc/sysctl.conf
 echo 'net.ipv4.tcp_congestion_control=bbr' |  tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_mem=786432 4194304 8388608' |  tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_rmem=16384 16384 4206592' |  tee -a /etc/sysctl.conf
+echo 'net.ipv4.tcp_wmem=16384 16384 4206592' |  tee -a /etc/sysctl.conf
+echo 'net.core.rmem_default=262144' |  tee -a /etc/sysctl.conf
+echo 'net.core.wmem_default=262144' |  tee -a /etc/sysctl.conf
+echo 'net.core.rmem_max=16777216' |  tee -a /etc/sysctl.conf
+echo 'net.core.wmem_max=16777216' |  tee -a /etc/sysctl.conf
 sysctl -p
 
 echo 'performing full system update...'
