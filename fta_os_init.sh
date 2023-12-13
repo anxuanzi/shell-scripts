@@ -18,12 +18,10 @@ echo 'installing epel-release...'
 dnf install epel-release -y
 
 echo 'installing softwares...'
-dnf install vim screen git wget curl net-tools gcc-c++ make python-devel -y
-dnf NetworkManager-tui -y
+dnf install vim screen git wget curl net-tools gcc-c++ make python-devel NetworkManager-tui -y
 
 echo 'installing extra softwares...'
 dnf install yum-utils device-mapper-persistent-data lvm2 htop telnet -y
-#dnf install tcping -y
 
 echo 'installing nodejs related...'
 dnf install https://rpm.nodesource.com/pub_20.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
