@@ -24,8 +24,8 @@ echo 'installing extra softwares...'
 dnf install yum-utils device-mapper-persistent-data lvm2 htop telnet -y
 
 echo 'installing nodejs related...'
-dnf install https://rpm.nodesource.com/pub_20.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
-nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
+curl -fsSL https://rpm.nodesource.com/setup_21.x | bash -
+dnf install -y nodejs
 
 curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
 dnf install -y yarn
