@@ -85,6 +85,8 @@ echo 'configuring ssh...'
 echo 'PermitEmptyPasswords no' | tee -a /etc/ssh/sshd_config
 echo 'UseDNS no' | tee -a /etc/ssh/sshd_config
 echo 'GSSAPIAuthentication no' | tee -a /etc/ssh/sshd_config
+echo 'PermitRootLogin prohibit-password' | tee -a /etc/ssh/sshd_config
+echo 'RSAAuthentication yes' | tee -a /etc/ssh/sshd_config
 
 echo 'configuring system limits...'
 echo '* soft nofile 65536' | tee -a /etc/security/limits.conf
