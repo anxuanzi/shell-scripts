@@ -8,7 +8,7 @@ sestatus
 
 setenforce 0
 
-sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux
+sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 
 echo 'SELinux turned off!'
 
