@@ -115,6 +115,7 @@ echo 'net.core.rmem_default=262144' |  tee -a /etc/sysctl.conf
 echo 'net.core.wmem_default=262144' |  tee -a /etc/sysctl.conf
 echo 'net.core.rmem_max=16777216' |  tee -a /etc/sysctl.conf
 echo 'net.core.wmem_max=16777216' |  tee -a /etc/sysctl.conf
+echo 'vm.overcommit_memory=1' |  tee -a /etc/sysctl.conf
 sysctl -p
 
 echo 'performing full system update...'
