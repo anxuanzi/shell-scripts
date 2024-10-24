@@ -53,23 +53,23 @@ dnf install gping -y
 dnf install pip -y
 pip install --user 'glances[action,cloud,cpuinfo,docker,export,folders,gpu,graph,ip,raid,snmp,wifi]'
 
-cd /tmp && curl -L https://github.com/bootandy/dust/releases/download/v0.8.4/dust-v0.8.4-x86_64-unknown-linux-gnu.tar.gz -o dust.tar.gz
+cd /tmp && curl -L https://github.com/bootandy/dust/releases/download/v1.1.1/dust-v1.1.1-x86_64-unknown-linux-gnu.tar.gz -o dust.tar.gz
 tar -xvf dust.tar.gz
-chmod +x /tmp/dust-v0.8.4-x86_64-unknown-linux-gnu/dust
-mv /tmp/dust-v0.8.4-x86_64-unknown-linux-gnu/dust /usr/bin/dust
+chmod +x /tmp/dust-v1.1.1-x86_64-unknown-linux-gnu/dust
+mv /tmp/dust-v1.1.1-x86_64-unknown-linux-gnu/dust /usr/bin/dust
 
-dnf install https://github.com/dalance/procs/releases/download/v0.14.0/procs-0.14.0-1.x86_64.rpm -y
+dnf install https://github.com/dalance/procs/releases/download/v0.14.8/procs-0.14.8-1.x86_64.rpm -y
 
-cd /tmp && curl -L https://github.com/rs/curlie/releases/download/v1.6.9/curlie_1.6.9_linux_amd64.rpm -o curlie_1.6.9_linux_amd64.rpm
-dnf install /tmp/curlie_1.6.9_linux_amd64.rpm -y
+cd /tmp && curl -L https://github.com/rs/curlie/releases/download/v1.7.2/curlie_1.7.2_linux_amd64.rpm -o curlie_1.7.2_linux_amd64.rpm
+dnf install /tmp/curlie_1.7.2_linux_amd64.rpm -y
 
 cd /tmp && curl -L https://github.com/muesli/duf/releases/download/v0.8.1/duf_0.8.1_linux_amd64.rpm -o duf_0.8.1_linux_amd64.rpm
 dnf install /tmp/duf_0.8.1_linux_amd64.rpm -y
 
-cd /tmp && curl -L https://github.com/sharkdp/fd/releases/download/v8.6.0/fd-v8.6.0-x86_64-unknown-linux-gnu.tar.gz -o fd.tar.gz
+cd /tmp && curl -L https://github.com/sharkdp/fd/releases/download/v10.2.0/fd-v10.2.0-x86_64-unknown-linux-gnu.tar.gz -o fd.tar.gz
 tar -xvf /tmp/fd.tar.gz
-chmod +x /tmp/fd-v8.6.0-x86_64-unknown-linux-gnu/fd
-mv /tmp/fd-v8.6.0-x86_64-unknown-linux-gnu/fd /usr/bin/fd
+chmod +x /tmp/fd-v10.2.0-x86_64-unknown-linux-gnu/fd
+mv /tmp/fd-v10.2.0-x86_64-unknown-linux-gnu/fd /usr/bin/fd
 
 echo 'alias top=glances' | tee -a /etc/profile.d/modern_linux.sh
 echo 'alias htop=btm' | tee -a /etc/profile.d/modern_linux.sh
