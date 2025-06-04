@@ -21,40 +21,14 @@ source "${UTILS_PATH}"
 # The msg_info from utils.sh will confirm it's loaded.
 msg_info "Starting OS initialization script..."
 
-# --- SELinux Configuration ---
-msg_info "Managing SELinux..."
-CURRENT_SELINUX_STATUS=$(sestatus | grep "Current mode:" | awk '{print $3}')
-CONFIG_SELINUX_STATUS=$(grep -E "^SELINUX=" /etc/selinux/config | awk -F= '{print $2}')
+msg_info "Configuring DNF/YUM..."
 
-msg_info "Current SELinux mode: ${CURRENT_SELINUX_STATUS}"
-msg_info "SELinux mode in /etc/selinux/config: ${CONFIG_SELINUX_STATUS}"
-
-if [ "${CURRENT_SELINUX_STATUS}" != "permissive" ] && [ "${CURRENT_SELINUX_STATUS}" != "disabled" ]; then
-    msg_info "Attempting to set SELinux to Permissive mode for the current session."
-    setenforce 0
-    check_exit_status "Failed to set SELinux to Permissive." "SELinux set to Permissive for the current session."
-else
-    msg_info "SELinux is already Permissive or Disabled for the current session."
-fi
-
-if [ "${CONFIG_SELINUX_STATUS}" != "disabled" ]; then
-    msg_info "Disabling SELinux in /etc/selinux/config..."
-    # Attempt to change from enforcing or permissive to disabled
-    sed -i -E "s/^(SELINUX=)(enforcing|permissive)/\1disabled/" /etc/selinux/config
-    check_exit_status "Failed to disable SELinux in /etc/selinux/config." "SELinux configuration updated to 'disabled'."
-    if ! grep -q "^SELINUX=disabled" /etc/selinux/config; then
-        # If the line didn't exist or wasn't enforcing/permissive, add it.
-        msg_warning "SELINUX line not found or not in expected state, adding SELINUX=disabled."
-        echo "SELINUX=disabled" >> /etc/selinux/config
-        check_exit_status "Failed to add SELINUX=disabled to /etc/selinux/config." "SELINUX=disabled added to /etc/selinux/config."
-    fi
-    msg_warning "A reboot is required for SELinux changes in /etc/selinux/config to take full effect."
-else
-    msg_info "SELinux is already set to 'disabled' in /etc/selinux/config."
-fi
+# --- System Update ---
+msg_info "Performing full system update..."
+dnf update -y
+check_exit_status "System update failed." "System updated successfully."
 
 # --- DNF/YUM Configuration ---
-msg_info "Configuring DNF/YUM..."
 msg_info "Installing EPEL repository..."
 dnf install epel-release -y
 check_exit_status "Failed to install EPEL repository." "EPEL repository installed successfully."
@@ -352,10 +326,37 @@ sysctl -p
 check_exit_status "Failed to apply kernel parameters with 'sysctl -p'." "Kernel parameters applied successfully via 'sysctl -p'."
 msg_success "Kernel parameters configured."
 
-# --- System Update ---
-msg_info "Performing full system update..."
-dnf update -y
-check_exit_status "System update failed." "System updated successfully."
+# --- SELinux Configuration ---
+msg_info "Managing SELinux..."
+CURRENT_SELINUX_STATUS=$(sestatus | grep "Current mode:" | awk '{print $3}')
+CONFIG_SELINUX_STATUS=$(grep -E "^SELINUX=" /etc/selinux/config | awk -F= '{print $2}')
+
+msg_info "Current SELinux mode: ${CURRENT_SELINUX_STATUS}"
+msg_info "SELinux mode in /etc/selinux/config: ${CONFIG_SELINUX_STATUS}"
+
+if [ "${CURRENT_SELINUX_STATUS}" != "permissive" ] && [ "${CURRENT_SELINUX_STATUS}" != "disabled" ]; then
+    msg_info "Attempting to set SELinux to Permissive mode for the current session."
+    setenforce 0
+    check_exit_status "Failed to set SELinux to Permissive." "SELinux set to Permissive for the current session."
+else
+    msg_info "SELinux is already Permissive or Disabled for the current session."
+fi
+
+if [ "${CONFIG_SELINUX_STATUS}" != "disabled" ]; then
+    msg_info "Disabling SELinux in /etc/selinux/config..."
+    # Attempt to change from enforcing or permissive to disabled
+    sed -i -E "s/^(SELINUX=)(enforcing|permissive)/\1disabled/" /etc/selinux/config
+    check_exit_status "Failed to disable SELinux in /etc/selinux/config." "SELinux configuration updated to 'disabled'."
+    if ! grep -q "^SELINUX=disabled" /etc/selinux/config; then
+        # If the line didn't exist or wasn't enforcing/permissive, add it.
+        msg_warning "SELINUX line not found or not in expected state, adding SELINUX=disabled."
+        echo "SELINUX=disabled" >> /etc/selinux/config
+        check_exit_status "Failed to add SELINUX=disabled to /etc/selinux/config." "SELINUX=disabled added to /etc/selinux/config."
+    fi
+    msg_warning "A reboot is required for SELinux changes in /etc/selinux/config to take full effect."
+else
+    msg_info "SELinux is already set to 'disabled' in /etc/selinux/config."
+fi
 
 # --- Cleanup ---
 msg_info "Cleaning up temporary files..."
